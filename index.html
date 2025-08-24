@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEM TESTING (IDENTIFICATION) LABORATORY — S R Nexus</title>
+    <!-- Use Inter font for a modern, clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Great+Vibes&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Load required libraries for PDF generation and screenshot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" defer></script>
+    <style>
+        :root {
+            --bgA: #0f172a;
+            --bgB: #0f4c81;
+            --panel: #ffffff;
+            --muted: #6b7280;
+            --accent: #3b82f6;
+            --gold: #c9a227;
+            --radius: 14px;
+            --glass: rgba(255, 255, 255, 0.06);
+            --forest-green: #228B22;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+            color: var(--bgA);
+            background: linear-gradient(180deg, #eef2ff, #f8fafc);
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 18px auto;
+            padding: 18px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, var(--bgB), #1e3a8a);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #60a5fa, #1e40af);
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .sub {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        main {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .card {
+            background: var(--panel);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: 0 16px 40px rgba(16, 24, 40, 0.06);
+            border: 1px solid rgba(16, 24, 40, 0.04);
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: var(--bgB);
+            margin: 0 0 8px 0;
+        }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .upload-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .file-btn {
+            background: linear-gradient(180deg, var(--accent), #1e40af);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .file-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .file-btn input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(16, 24, 40, 0.06);
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: var(--bgB);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-ghost:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-accent {
+            background: linear-gradient(180deg, var(--accent), #1e40af);
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+        }
+
+        .small {
+            font-size: 13px;
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .metric {
+            background: linear-gradient(180deg, #fff, #f8fbff);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 24, 40, 0.04);
+        }
+
+        .k {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .v {
+            font-weight: 700;
+        }
+
+        .cert {
+            position: relative;
+            background: linear-gradient(180deg, #fff, #fcfdff);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid rgba(16, 24, 40, 0.06);
+            overflow: hidden;
+        }
+        
+        /* Updated Watermark Styling */
+        .cert .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-12deg);
+            font-family: Georgia, serif;
+            font-weight: 800;
+            font-size: 120px; /* Increased font size for better presence */
+            line-height: 1.2;
+            text-align: center;
+            color: rgba(16, 24, 40, 0.04);
+            pointer-events: none;
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .cert-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(16, 24, 40, 0.04);
+            padding-bottom: 10px;
+        }
+
+        .cert-title {
+            font-family: 'Tangerine', cursive;
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--bgB);
+        }
+
+        .cert-meta {
+            font-size: 13px;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        .cert-body {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .thumb {
+            flex-basis: 34%;
+            min-width: 180px;
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(16, 24, 40, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cert-table {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .ct-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(16, 24, 40, 0.03);
+        }
+        
+        .ct-row .key {
+            color: var(--muted);
+            width: 38%;
+        }
+        
+        .ct-row .val {
+            font-weight: 700;
+            flex: 1;
+        }
+        
+        .inline, .inline-input {
+            border: 0;
+            background: transparent;
+            border-bottom: 1px dashed rgba(16, 24, 40, 0.06);
+            padding: 2px 5px;
+            font-weight: 700;
+            width: 100%;
+            text-align: right;
+            outline: none;
+        }
+        
+        .inline-span {
+            font-weight: 700;
+            padding: 2px 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .inline-span:hover {
+            text-decoration: underline;
+        }
+        .inline-span:focus {
+            outline: none;
+            background: #f1f5f9;
+        }
+
+        .inline-div {
+            font-weight: 700;
+            padding: 2px 5px;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+            text-align: right;
+        }
+
+        #imagePreviewSection {
+            display: none;
+            text-align: center;
+            padding: 16px;
+        }
+        
+        #uploadedImagePreview {
+            max-width: 70%;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 12px auto;
+        }
+
+        .sig-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .sig-box {
+            flex: 1;
+            text-align: center;
+            border-top: 1px solid rgba(16, 24, 40, 0.06);
+            padding-top: 8px;
+            color: var(--muted);
+        }
+
+        .cert canvas {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .controls-bottom {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--bgA);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast-success {
+            background: #10b981;
+        }
+
+        .toast-error {
+            background: #ef4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .btn-loading {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin: -8px 0 0 -8px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .thumb {
+                flex-basis: 100%;
+            }
+        }
+
+        .api-key-section {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .api-key-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-top: 6px;
+            font-family: monospace;
+        }
+        
+        .api-key-help {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <div class="logo">SR</div>
+                <div>
+                    <h1>GEM TESTING (IDENTIFICATION)</h1>
+                    <div class="sub">S R Nexus — Modern Lab Interface</div>
+                </div>
+            </div>
+            <div class="muted">Simplified Workflow • Direct Analysis • Editable Certificate</div>
+        </header>
+
+        <main>
+            <!-- 0) API Key Section - Added for local testing -->
+            <section class="card" id="apiKeySection">
+                <h3 class="section-title">Gemini API Key</h3>
+                <div class="muted">Required for gemstone analysis functionality</div>
+                <div class="api-key-section">
+                    <label for="apiKeyInput">Enter your Gemini API Key:</label>
+                    <input type="password" id="apiKeyInput" class="api-key-input" placeholder="AIza...">
+                    <div class="api-key-help">
+                        Get your API key from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>. 
+                        Your key is stored only in your browser.
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1) Upload and Controls -->
+            <section class="card">
+                <h3 class="section-title">1) Upload Image</h3>
+                <div class="upload-row">
+                    <label class="file-btn">
+                        Choose Photo
+                        <input id="fileInput" type="file" accept="image/*">
+                    </label>
+                    <button id="generateCertBtn" class="btn-accent" disabled>Generate Certificate</button>
+                    <button id="resetBtn" class="btn-ghost" disabled>Reset</button>
+                </div>
+                <p class="muted" style="margin-top:12px; margin-bottom:0;">Upload a clear image of the gemstone. The entire image will be used for analysis.</p>
+            </section>
+
+            <!-- 2) Image Preview - This is the new section for immediate feedback -->
+            <section class="card" id="imagePreviewSection">
+                <h3 class="section-title">2) Image Preview</h3>
+                <div class="muted">This is the image you selected for analysis.</div>
+                <img id="uploadedImagePreview" src="" alt="Image preview of uploaded gemstone">
+            </section>
+
+            <!-- 3) Analysis Results -->
+            <section class="card">
+                <h3 class="section-title">3) Analysis Results</h3>
+                <div class="muted">Analysis runs on the full uploaded image. You can edit any field in the certificate preview below before downloading.</div>
+                <div id="metrics" class="grid2" style="margin-top:12px"></div>
+            </section>
+
+            <!-- 4) Certificate -->
+            <section class="card">
+                <h3 class="section-title">4) Certificate Preview</h3>
+                <div class="cert" id="certPreview">
+                    <!-- UPDATED: Watermark text to be more compact -->
+                    <div class="watermark">GTL</div>
+                    <div class="cert-head">
+                        <div>
+                            <div class="cert-title">GEM TESTING (IDENTIFICATION) LABORATORY</div>
+                            <div class="muted small">Certificate issued on behalf of <span id="fIssuedBy" class="inline-span" contenteditable="true">S R Nexus</span>, India</div>
+                        </div>
+                        <div class="cert-meta">
+                            <div class="small">Certificate #</div>
+                            <div id="certNo"></div>
+                            <div class="small" style="margin-top:8px">Date</div>
+                            <input type="date" id="certDate" class="inline-input" style="text-align:right" />
+                        </div>
+                    </div>
+
+                    <div class="cert-body">
+                        <div class="thumb"><canvas id="certCanvas" width="340" height="340"></canvas></div>
+                        <div class="cert-table">
+                            <div class="ct-row"><div class="key">Stone</div><div class="val"><input id="fName" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Category</div><div class="val"><input id="fCategory" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Colour</div><div class="val"><input id="fColor" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Cut</div><div class="val"><input id="fCut" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Carat</div><div class="val"><input id="fCarat" class="inline" /></div></div>
+                            <!-- NEW: Rati Calculation field -->
+                            <div class="ct-row"><div class="key">Rati</div><div class="val"><input id="fRati" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Ratio</div><div class="val"><input id="fRatio" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Dimensions (mm)</div><div class="val"><input id="fDims" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Clarity</div><div class="val"><input id="fClarity" class="inline" /></div></div>
+                            <div class="ct-row"><div class="key">Origin</div><div class="val"><input id="fOrigin" class="inline" /></div></div>
+                            <!-- UPDATED: Replaced input with a div to allow multiline text for astrological use -->
+                            <div class="ct-row"><div class="key">Astrological use</div><div class="val"><div id="fAstro" class="inline-div"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="sig-row">
+                        <div class="sig-box" id="signBox"><img id="sigImg" style="max-width:220px;display:block;margin:0 auto"/><div id="sigName" class="muted"></div></div>
+                        <div class="sig-box" id="sealBox"><img id="sealImg" style="max-width:160px;display:block;margin:0 auto"/><div class="muted">Laboratory Seal</div></div>
+                    </div>
+                </div>
+
+                <div class="controls-bottom">
+                    <button id="downloadBtn" class="btn-accent" disabled>Download PDF</button>
+                    <!-- UPDATED: Replaced saveBtn with downloadImageBtn -->
+                    <button id="downloadImageBtn" class="btn-ghost" disabled>Download Image</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // --- Element and State Management ---
+        const fileInput = document.getElementById('fileInput');
+        const uploadedImagePreview = document.getElementById('uploadedImagePreview');
+        const imagePreviewSection = document.getElementById('imagePreviewSection');
+        const certCanvas = document.getElementById('certCanvas');
+        const certCtx = certCanvas.getContext('2d');
+        const resetBtn = document.getElementById('resetBtn');
+        const generateCertBtn = document.getElementById('generateCertBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        // UPDATED: New button for image download
+        const downloadImageBtn = document.getElementById('downloadImageBtn');
+        const metricsEl = document.getElementById('metrics');
+        const toastContainer = document.getElementById('toastContainer');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const apiKeySection = document.getElementById('apiKeySection');
+
+        const certNo = document.getElementById('certNo');
+        const certDate = document.getElementById('certDate'); // Now an input
+        const fIssuedBy = document.getElementById('fIssuedBy'); // Now an editable span
+        const fName = document.getElementById('fName');
+        const fCategory = document.getElementById('fCategory');
+        const fColor = document.getElementById('fColor');
+        const fCut = document.getElementById('fCut');
+        const fCarat = document.getElementById('fCarat');
+        // New Rati element
+        const fRati = document.getElementById('fRati');
+        const fRatio = document.getElementById('fRatio');
+        const fDims = document.getElementById('fDims');
+        const fClarity = document.getElementById('fClarity');
+        const fOrigin = document.getElementById('fOrigin');
+        const fAstro = document.getElementById('fAstro');
+        const sigImg = document.getElementById('sigImg');
+        const sigNameEl = document.getElementById('sigName');
+        const sealImg = document.getElementById('sealImg');
+
+        // State to hold the original image data
+        let originalImage = null;
+        let base64Image = null;
+        let previewURL = null;
+        
+        // Updated: Set fixed certificate number with new prefix and no '#'
+        certNo.textContent = 'GTL' + String(Date.now()).slice(-6);
+        certDate.value = new Date().toISOString().split('T')[0];
+
+        // Load API key from localStorage if available
+        const savedApiKey = localStorage.getItem('gemini_api_key');
+        if (savedApiKey) {
+            apiKeyInput.value = savedApiKey;
+        }
+
+        // Save API key when changed
+        apiKeyInput.addEventListener('change', () => {
+            localStorage.setItem('gemini_api_key', apiKeyInput.value);
+            showToast('API key saved', 'success');
+        });
+        
+        // Save the date when it's changed
+        certDate.addEventListener('change', () => {
+            showToast('Date updated and saved locally', 'success');
+        });
+        
+        // Save the issued by name when it's changed
+        fIssuedBy.addEventListener('blur', () => {
+            showToast('Issued name updated and saved locally', 'success');
+        });
+
+        // --- Toast notification system ---
+        function showToast(message, type = 'default', duration = 4000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type !== 'default' ? 'toast-' + type : ''}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s';
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 500);
+            }, duration);
+        }
+        
+        // --- Helper function to convert image to base64 ---
+        function getBase64Image(img) {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL('image/jpeg', 0.8);
+            return dataURL.replace(/^data:image\/(png|jpeg);base64,/, "");
+        }
+        
+        // Function to clean up the temporary URL to avoid memory leaks
+        function cleanupPreviewURL() {
+            if (previewURL) {
+                URL.revokeObjectURL(previewURL);
+                previewURL = null;
+            }
+        }
+
+        // --- Core Application Workflow ---
+        // New logic to handle image preview using URL.createObjectURL
+        fileInput.addEventListener('change', async (e) => {
+            cleanupPreviewURL(); // Clean up any previous URL
+            const file = e.target.files && e.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            try {
+                showToast('Processing image...', 'default', 3000);
+                
+                // Create an object URL for immediate display
+                previewURL = URL.createObjectURL(file);
+                uploadedImagePreview.src = previewURL;
+                imagePreviewSection.style.display = 'block';
+
+                // Use a FileReader for the base64 data needed for the API call
+                const reader = new FileReader();
+                const dataUrl = await new Promise((resolve, reject) => {
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                
+                // Create an Image object from the Data URL and wait for it to load
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                    img.onload = () => {
+                        // Set the originalImage state variable and enable controls
+                        originalImage = img;
+                        base64Image = getBase64Image(originalImage);
+                        enableControls(true);
+                        resolve();
+                    };
+                    img.onerror = reject;
+                    img.src = dataUrl;
+                });
+
+                showToast('Image uploaded! Click "Generate Certificate" to begin analysis.', 'success');
+            } catch (error) {
+                console.error('Error during file upload and preview:', error);
+                showToast('Error loading image. Please try again.', 'error');
+                cleanupPreviewURL();
+                enableControls(false);
+                uploadedImagePreview.src = '';
+                imagePreviewSection.style.display = 'none';
+            }
+        });
+        
+        // 2. Button to trigger certificate generation and rendering
+        generateCertBtn.addEventListener('click', async () => {
+            if (!originalImage || !base64Image) {
+                showToast('Please upload an image first.', 'error');
+                return;
+            }
+
+            // Check if API key is provided
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                showToast('Please enter a valid Gemini API key', 'error');
+                apiKeySection.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            generateCertBtn.textContent = 'Analyzing...';
+            generateCertBtn.disabled = true;
+            generateCertBtn.classList.add('btn-loading');
+
+            await analyzeAndFillFields(base64Image, originalImage, apiKey);
+            
+            generateCertBtn.textContent = 'Generate Certificate';
+            generateCertBtn.disabled = false;
+            generateCertBtn.classList.remove('btn-loading');
+        });
+
+        // 3. Reset the application to its initial state
+        resetBtn.addEventListener('click', () => {
+            let userConfirmed = false;
+            try {
+                userConfirmed = confirm('Are you sure you want to reset? All current data will be lost.');
+            } catch (e) {
+                userConfirmed = true;
+            }
+
+            if (userConfirmed) {
+                cleanupPreviewURL();
+                originalImage = null;
+                base64Image = null;
+                fileInput.value = '';
+                uploadedImagePreview.src = '';
+                imagePreviewSection.style.display = 'none';
+                certCtx.clearRect(0, 0, certCanvas.width, certCanvas.height);
+                metricsEl.innerHTML = '';
+                const fields = [fName, fCategory, fColor, fCut, fCarat, fRati, fRatio, fDims, fClarity, fOrigin];
+                fields.forEach(f => f.value = '');
+                fAstro.textContent = '';
+                sigImg.src = '';
+                sigNameEl.textContent = '';
+                sealImg.src = '';
+                enableControls(false);
+                
+                // Reset the new fields
+                certNo.textContent = 'GTL' + String(Date.now()).slice(-6);
+                certDate.value = new Date().toISOString().split('T')[0];
+                fIssuedBy.textContent = 'S R Nexus';
+
+                showToast('Application reset successfully', 'success');
+            }
+        });
+
+        // --- Helper functions for controls and rendering ---
+        function enableControls(flag) {
+            resetBtn.disabled = !flag;
+            generateCertBtn.disabled = !flag;
+            downloadBtn.disabled = !flag;
+            // UPDATED: Enable/disable new button
+            downloadImageBtn.disabled = !flag;
+        }
+
+        // Draws the image onto the certificate canvas for the final document
+        function renderCertificateImage(img) {
+            certCanvas.width = 340;
+            certCanvas.height = 340;
+            certCtx.clearRect(0, 0, certCanvas.width, certCanvas.height);
+            if (!img) return;
+
+            const cw = img.naturalWidth;
+            const ch = img.naturalHeight;
+            const scale = Math.min((certCanvas.width - 20) / cw, (certCanvas.height - 20) / ch);
+            const w = cw * scale;
+            const h = ch * scale;
+            const x = (certCanvas.width - w) / 2;
+            const y = (certCanvas.height - h) / 2;
+            
+            // Draw white background
+            certCtx.fillStyle = '#ffffff';
+            certCtx.fillRect(0, 0, certCanvas.width, certCanvas.height);
+            
+            // Draw image with shadow for a professional look
+            certCtx.shadowColor = 'rgba(0,0,0,0.2)';
+            certCtx.shadowBlur = 10;
+            certCtx.shadowOffsetY = 4;
+            certCtx.drawImage(img, 0, 0, cw, ch, x, y, w, h);
+            certCtx.shadowColor = 'transparent';
+            certCtx.shadowBlur = 0;
+            certCtx.shadowOffsetY = 0;
+        }
+        
+        // Mock analysis function for when API is not available
+        function mockGemstoneAnalysis() {
+            // Sample gemstone data for demonstration
+            const gemstones = [
+                {
+                    name: "Diamond",
+                    category: "Gemstone",
+                    color: "Colorless",
+                    cut: "Round Brilliant",
+                    carat: "1.25 ct",
+                    ratio: "1.00",
+                    dims: "6.8 × 6.8 × 4.1 mm",
+                    clarity: "VS1",
+                    origin: "South Africa",
+                    astro: "Associated with Venus. Brings wealth, luxury, and harmony in relationships."
+                },
+                {
+                    name: "Sapphire",
+                    category: "Gemstone",
+                    color: "Blue",
+                    cut: "Oval",
+                    carat: "2.55 ct",
+                    ratio: "1.45",
+                    dims: "9.2 × 6.3 × 4.8 mm",
+                    clarity: "VVS2",
+                    origin: "Sri Lanka",
+                    astro: "Associated with Saturn. Provides discipline, focus, and protection from negative energies."
+                },
+                {
+                    name: "Ruby",
+                    category: "Gemstone",
+                    color: "Red",
+                    cut: "Cushion",
+                    carat: "1.85 ct",
+                    ratio: "1.12",
+                    dims: "7.5 × 6.7 × 5.2 mm",
+                    clarity: "SI1",
+                    origin: "Myanmar",
+                    astro: "Associated with the Sun. Enhances leadership, confidence, and vitality."
+                },
+                {
+                    name: "Emerald",
+                    category: "Gemstone",
+                    color: "Green",
+                    cut: "Emerald Cut",
+                    carat: "2.10 ct",
+                    ratio: "1.35",
+                    dims: "8.9 × 6.6 × 5.0 mm",
+                    clarity: "SI2",
+                    origin: "Colombia",
+                    astro: "Associated with Mercury. Improves communication, intelligence, and business success."
+                },
+                {
+                    name: "Amethyst",
+                    category: "Gemstone",
+                    color: "Purple",
+                    cut: "Princess",
+                    carat: "5.25 ct",
+                    ratio: "1.05",
+                    dims: "10.5 × 10.0 × 7.2 mm",
+                    clarity: "VVS1",
+                    origin: "Brazil",
+                    astro: "Associated with Jupiter. Promotes spirituality, wisdom, and sobriety."
+                }
+            ];
+            
+            // Return a random gemstone from the list
+            return gemstones[Math.floor(Math.random() * gemstones.length)];
+        }
+        
+        async function analyzeAndFillFields(base64Data, originalImg, apiKey) {
+            // Note: The prompt is crucial for directing the AI to the correct output format.
+            const prompt = `Analyze the stone, which could be a gemstone or a mineral, in the image. Identify its properties and provide the details in a JSON object. For the 'category' field, please use 'Gemstone' or 'Mineral' as appropriate. If the information is not available from the image, make an educated guess or mark as "Not Assessed".
+            
+            JSON fields required:
+            - name: The specific type of gemstone or mineral (e.g., Pyrite, Hematite, Diamond, Sapphire).
+            - category: 'Gemstone' or 'Mineral'.
+            - color: The dominant color of the stone.
+            - cut: The cut style of the stone (e.g., Natural, Rough, Round Brilliant, Oval).
+            - carat: A realistic estimate of the stone's carat weight. Use a value like "2.55 ct".
+            - ratio: The length-to-width ratio of the stone. Use a value like "1.25".
+            - dims: Estimated dimensions of the stone in millimeters. Use a format like "8.2 × 6.5 × 4.1 mm".
+            - clarity: An estimate of the stone's clarity grade (e.e.g., Opaque, Translucent, VS, SI, I).
+            - origin: A probable origin country/region for this type of stone.
+            - astro: The astrological use or association of the stone. Provide a concise, brief description in one to two sentences.`;
+
+            // If no API key is provided, use mock data
+            if (!apiKey) {
+                showToast('Using demo data (no API key provided)', 'default', 5000);
+                
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const gemData = mockGemstoneAnalysis();
+                populateGemData(gemData, originalImg);
+                return;
+            }
+
+            const payload = {
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }, {
+                        inlineData: {
+                            mimeType: "image/jpeg",
+                            data: base64Data
+                        }
+                    }]
+                }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "name": { "type": "STRING" },
+                            "category": { "type": "STRING" },
+                            "color": { "type": "STRING" },
+                            "cut": { "type": "STRING" },
+                            "carat": { "type": "STRING" },
+                            "ratio": { "type": "STRING" },
+                            "dims": { "type": "STRING" },
+                            "clarity": { "type": "STRING" },
+                            "origin": { "type": "STRING" },
+                            "astro": { "type": "STRING" }
+                        },
+                        required: ["name", "category", "color", "cut", "carat", "ratio", "dims", "clarity", "origin", "astro"]
+                    }
+                }
+            };
+            
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 400) {
+                        throw new Error("Invalid API key or request format");
+                    } else if (response.status === 429) {
+                        throw new Error("API quota exceeded. Please try again later.");
+                    } else if (response.status >= 500) {
+                        throw new Error("Server error. Please try again later.");
+                    } else {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                }
+
+                const result = await response.json();
+                
+                if (!result.candidates || result.candidates.length === 0 || !result.candidates[0].content || !result.candidates[0].content.parts || result.candidates[0].content.parts.length === 0) {
+                    throw new Error("Invalid response structure from API.");
+                }
+
+                const jsonString = result.candidates[0].content.parts[0].text;
+                const gemData = JSON.parse(jsonString);
+                
+                populateGemData(gemData, originalImg);
+                showToast('Certificate analysis complete!', 'success');
+
+            } catch (error) {
+                console.error("Analysis failed:", error);
+                showToast(`Analysis failed: ${error.message}. Using demo data instead.`, 'error');
+                
+                // Fall back to mock data
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const gemData = mockGemstoneAnalysis();
+                populateGemData(gemData, originalImg);
+            }
+        }
+        
+        function populateGemData(gemData, originalImg) {
+            // Populate analysis metrics
+            metricsEl.innerHTML = '';
+            const m1 = document.createElement('div');
+            m1.className = 'metric';
+            m1.innerHTML = `<div class='k'>Stone Name</div><div class='v'>${gemData.name || 'Not Assessed'}</div>`;
+            const m2 = document.createElement('div');
+            m2.className = 'metric';
+            m2.innerHTML = `<div class='k'>Color</div><div class='v'>${gemData.color || 'Not Assessed'}</div>`;
+            const m3 = document.createElement('div');
+            m3.className = 'metric';
+            m3.innerHTML = `<div class='k'>Est. Carat</div><div class='v'>${gemData.carat || 'Not Assessed'}</div>`;
+            const m4 = document.createElement('div');
+            m4.className = 'metric';
+            m4.innerHTML = `<div class='k'>Cut Style</div><div class='v'>${gemData.cut || 'Not Assessed'}</div>`;
+            metricsEl.appendChild(m1);
+            metricsEl.appendChild(m2);
+            metricsEl.appendChild(m3);
+            metricsEl.appendChild(m4);
+
+            // Fill certificate fields
+            fName.value = gemData.name || '';
+            fCategory.value = gemData.category || '';
+            fColor.value = gemData.color || '';
+            fCut.value = gemData.cut || '';
+            fCarat.value = gemData.carat || '';
+            
+            // NEW: Calculate and populate Rati
+            const caratValue = parseFloat(gemData.carat) || 0;
+            if (caratValue > 0) {
+                // Standard conversion: 1 carat = 5.4746 rati
+                const ratiValue = (caratValue * 5.4746).toFixed(2);
+                fRati.value = `${ratiValue} Ratti`;
+            } else {
+                fRati.value = 'N/A';
+            }
+
+            fRatio.value = gemData.ratio || '';
+            fDims.value = gemData.dims || '';
+            fClarity.value = gemData.clarity || '';
+            fOrigin.value = gemData.origin || '';
+            // UPDATED: Use textContent for the div
+            fAstro.textContent = gemData.astro || '';
+
+            // Generate signature and seal images
+            const signer = genRandomIndianName();
+            sigNameEl.textContent = signer;
+            
+            // Generate initial-based signature
+            const signatureInitials = getInitialSignature(signer);
+            generateInitialSignatureDataURL(signatureInitials).then(data => {
+                sigImg.src = data;
+            });
+            
+            // Call the newly updated function for the seal
+            sealImg.src = generateSealSVGDataURL();
+            
+            // Render the image on the certificate canvas
+            renderCertificateImage(originalImg);
+        }
+        
+        // --- Signature and Seal Generation ---
+        function genRandomIndianName() {
+            const first = ['Aarav', 'Arjun', 'Rohan', 'Vikram', 'Siddharth', 'Karan', 'Aman', 'Vivek', 'Rahul', 'Ravi', 'Manish', 'Deepak', 'Rakesh', 'Raj'];
+            const last = ['Sharma', 'Singh', 'Patel', 'Verma', 'Gupta', 'Reddy', 'Nair', 'Joshi', 'Iyer', 'Chopra'];
+            return first[Math.floor(Math.random() * first.length)] + ' ' + last[Math.floor(Math.random() * last.length)];
+        }
+        
+        // Function to create initial-based signature text
+        function getInitialSignature(fullName) {
+            const parts = fullName.split(' ');
+            if (parts.length === 1) return parts[0].charAt(0);
+            
+            // Get first letter of first name and full last name
+            return parts[0].charAt(0) + '. ' + parts[parts.length - 1];
+        }
+        
+        // Generate initial-based signature
+        async function generateInitialSignatureDataURL(signatureText) {
+            try {
+                await document.fonts.load('48px "Great Vibes"');
+            } catch (e) {}
+            
+            const c = document.createElement('canvas');
+            c.width = 320;
+            c.height = 100;
+            const ctx = c.getContext('2d');
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.fillStyle = 'transparent';
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.font = '42px "Great Vibes", cursive';
+            
+            // Draw the signature with a slight slant to make it look more natural
+            ctx.save();
+            ctx.translate(c.width / 2, c.height / 2);
+            ctx.rotate(-0.1); // Slight rotation for a natural signature look
+            ctx.fillText(signatureText, 0, 0);
+            ctx.restore();
+            
+            return c.toDataURL('image/png');
+        }
+        
+        // UPDATED: This is the modified function for the new seal design
+        function generateSealSVGDataURL() {
+            // Updated colors for the seal as per the request
+            const sealColor = 'none'; // No fill color inside
+            const borderColor = '#4b5563'; // Deep gray border
+            const textColor = '#228B22'; // Green text/star color
+
+            const svg = `
+                <svg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 100 100'>
+                    <!-- Rectangular border with rounded corners -->
+                    <rect x="10" y="10" width="80" height="80" rx="10" ry="10" fill="${sealColor}" />
+                    
+                    <!-- Inner content -->
+                    <g transform="translate(50, 50)">
+                        <!-- Bold Star in the middle with the new green color -->
+                        <text font-size="40" font-weight="900" font-family="Arial, sans-serif" fill="${textColor}" text-anchor="middle" dominant-baseline="central">
+                            &#9733;
+                        </text>
+                        <!-- GT(I)L CERTIFIED text with the new green color -->
+                        <text font-size="10" font-weight="bold" font-family="Inter, sans-serif" fill="${textColor}" text-anchor="middle" dominant-baseline="central" y="38">
+                           GT(I)L CERTIFIED
+                        </text>
+                    </g>
+                </svg>`;
+            return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+        }
+
+        // --- PDF and Image Generation ---
+        downloadBtn.addEventListener('click', async () => {
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = 'Preparing...';
+            try {
+                const node = document.getElementById('certPreview');
+                // Use a higher scale for better resolution in the PDF
+                const canvas = await html2canvas(node, { scale: 3, backgroundColor: '#ffffff' });
+                const img = canvas.toDataURL('image/png');
+                const {
+                    jsPDF
+                } = window.jspdf;
+                const pdf = new jsPDF({
+                    unit: 'pt',
+                    format: 'a4'
+                });
+                const margin = 36;
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const canvasWidth = canvas.width;
+                const canvasHeight = canvas.height;
+                const scaleFactor = Math.min((pdfWidth - margin * 2) / canvasWidth, (pdfHeight - margin * 2) / canvasHeight);
+                const w = canvasWidth * scaleFactor;
+                const h = canvasHeight * scaleFactor;
+                const x = (pdfWidth - w) / 2;
+                const y = (pdfHeight - h) / 2;
+
+                pdf.addImage(img, 'PNG', x, y, w, h);
+                pdf.save((certNo.textContent || 'GTL-CERT') + '.pdf');
+                showToast('PDF downloaded successfully', 'success');
+            } catch (e) {
+                showToast('PDF error: ' + (e.message || e), 'error');
+            }
+            downloadBtn.disabled = false;
+            downloadBtn.textContent = 'Download PDF';
+        });
+
+        // UPDATED: New event listener for the "Download Image" button
+        downloadImageBtn.addEventListener('click', async () => {
+            downloadImageBtn.disabled = true;
+            downloadImageBtn.textContent = 'Capturing...';
+            downloadImageBtn.classList.add('btn-loading');
+
+            try {
+                const node = document.getElementById('certPreview');
+                // Use a higher scale for better resolution in the image
+                const canvas = await html2canvas(node, { scale: 3, backgroundColor: '#ffffff' });
+                const imageURL = canvas.toDataURL('image/png');
+
+                // Create a temporary link element to trigger the download
+                const link = document.createElement('a');
+                link.href = imageURL;
+                link.download = (certNo.textContent || 'GTL-CERT') + '.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showToast('Image downloaded successfully', 'success');
+            } catch (e) {
+                showToast('Image download error: ' + (e.message || e), 'error');
+            }
+            
+            downloadImageBtn.disabled = false;
+            downloadImageBtn.textContent = 'Download Image';
+            downloadImageBtn.classList.remove('btn-loading');
+        });
+
+
+        // --- Load saved data on startup ---
+        (function loadSaved() {
+            const raw = localStorage.getItem('srn:lastCertSimple');
+            if (!raw) return;
+            try {
+                const o = JSON.parse(raw);
+                if (o.image) {
+                    originalImage = new Image();
+                    originalImage.onload = () => {
+                        enableControls(true);
+                        renderCertificateImage(originalImage);
+                    };
+                    originalImage.src = o.image;
+                    uploadedImagePreview.src = o.image;
+                    imagePreviewSection.style.display = 'block';
+                }
+                if (o.certNo) certNo.textContent = o.certNo;
+                if (o.date) certDate.value = o.date;
+                if (o.issuedBy) fIssuedBy.textContent = o.issuedBy;
+                if (o.name) fName.value = o.name;
+                if (o.category) fCategory.value = o.category;
+                if (o.color) fColor.value = o.color;
+                if (o.cut) fCut.value = o.cut;
+                if (o.carat) fCarat.value = o.carat;
+                if (o.rati) fRati.value = o.rati;
+                if (o.ratio) fRatio.value = o.ratio;
+                if (o.dims) fDims.value = o.dims;
+                if (o.clarity) fClarity.value = o.clarity;
+                if (o.origin) fOrigin.value = o.origin;
+                if (o.astro) fAstro.textContent = o.astro;
+                if (o.signature) sigImg.src = o.signature;
+                if (o.signer) sigNameEl.textContent = o.signer;
+                if (o.seal) sealImg.src = o.seal;
+            } catch (e) {
+                console.error("Failed to load saved data:", e);
+                showToast('Error loading saved data', 'error');
+            }
+        })();
+    </script>
+</body>
+</html>
